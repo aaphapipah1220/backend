@@ -18,22 +18,45 @@ else:
     print(f"Gagal memuat data {response.status_code}")
 
 
-# ======================== interface
+# ====================================== interface =========================================
 screen = tkinter.Tk()
 screen.geometry("500x500")
+screen.title("Information Time")
 
-def check():
+# ====================================== function ==========================================
+
+def check_weather():
     # img.configure(image=data['current']['weather_icons'])
-    show.configure(text=f"""
+    show_weather.configure(text=f"""
                    Kota : {data['request']['query']} 
                    Suhu : {data['current']['temperature']}
                    Keterangan : {data['current']['weather_descriptions']}""")
+    
+def check_time():
+    show_time.configure(text=f"""
+                        Kota : {data['request']['query']} 
+                        Zona Waktu : {data['location']['timezone_id']}
+                        Jam : {data['location']['localtime']}
 
-button = tkinter.Button(screen, text="weather check", command=check)
-show = tkinter.Label(screen)
-img = tkinter.Label(screen)
+                        Informasi:
+                        - sunrise : {data['current']['astro']['sunrise']}
+                        - sunset : {data['current']['astro']['sunset']}
+                        - moonrise : {data['current']['astro']['moonrise']}
+                        - moonset : {data['current']['astro']['moonset']}""")
 
-button.pack()
-show.pack()
+# ======================================= widgets ==========================================
+
+# img = tkinter.Label(screen)
+
+button_weather = tkinter.Button(screen, text="Weather", command=check_weather, background="blue")
+show_weather = tkinter.Label(screen)
+
+button_time = tkinter.Button(screen, text="Time", command=check_time, background="orange")
+show_time = tkinter.Label(screen)
+
+button_weather.pack()
+show_weather.pack()
+button_time.pack()
+show_time.pack()
 
 screen.mainloop()
